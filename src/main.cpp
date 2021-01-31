@@ -90,10 +90,8 @@ void usercontrol(void) {
        int leftStickXaxis = Controller1.Axis4.value();
        int rawStrafeInput = leftStickXaxis;
 
-       int rightStickYaxis = (abs(Controller1.Axis2.value()));
-       int speedAdjustment = rightStickYaxis;
-       
-       int multipliedStrifeValue = (rawStrafeInput * speedAdjustment);
+
+       int rightStickYaxis = (Controller1.Axis2.value() + 100) / 50;
 
        // defining variables with Quincy
      // strafe = left stick x-axis
@@ -101,10 +99,10 @@ void usercontrol(void) {
      // turn = right stick x-axis
      /* */  
 
-     FrontLeftMotor.spin(directionType::fwd, Controller1.Axis3.value() - Controller1.Axis1.value() - (abs(Controller1.Axis2.value()) * Controller1.Axis4.value()), vex::velocityUnits::pct);
-     BackLeftMotor.spin(directionType::fwd, Controller1.Axis3.value() - Controller1.Axis1.value() + (abs(Controller1.Axis2.value()) * Controller1.Axis4.value()), vex::velocityUnits::pct);
-     FrontRightMotor.spin(directionType::fwd, Controller1.Axis3.value() + Controller1.Axis1.value() + (abs(Controller1.Axis2.value()) * Controller1.Axis4.value()), vex::velocityUnits::pct);
-     BackRightMotor.spin(directionType::fwd, Controller1.Axis3.value() + Controller1.Axis1.value() - (abs(Controller1.Axis2.value()) * Controller1.Axis4.value()), vex::velocityUnits::pct);
+     FrontLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
+     BackLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() + Controller1.Axis4.value())* rightStickYaxis, vex::velocityUnits::pct);
+     FrontRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() + Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
+     BackRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
      
     }
     // ........................................................................
