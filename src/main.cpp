@@ -3,7 +3,7 @@
 /*    Module:       main.cpp                                                  */
 /*    Author:       VEX                                                       */
 /*    Created:      Thu Sep 26 2019                                           */
-/*    Description:  Competition Template                                      */
+/*    Description:  Competition Template k                                     */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -91,7 +91,7 @@ void usercontrol(void) {
        int rawStrafeInput = leftStickXaxis;
 
 
-       int rightStickYaxis = (Controller1.Axis2.value() + 100) / 50;
+       int rightStickYaxis = (Controller1.Axis2.value() + 126) / 62.5;
 
        // defining variables with Quincy
      // strafe = left stick x-axis
