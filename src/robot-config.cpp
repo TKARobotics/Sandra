@@ -10,10 +10,12 @@ brain  Brain;
 // VEXcode device constructors
 controller Controller1 = controller(primary);
 
-motor BackRightMotor = motor(PORT10, false);
-motor BackLeftMotor = motor (PORT9, true);
-motor FrontLeftMotor = motor (PORT1, true);
-motor FrontRightMotor = motor (PORT2, false);
+motor BackRightMotor = motor(PORT10, true);
+motor BackLeftMotor = motor (PORT9, false);
+motor FrontLeftMotor = motor (PORT1, false);
+motor FrontRightMotor = motor (PORT2, true);
+motor LeftBasketMotor = motor (PORT3, false);
+motor RightBasketMotor = motor (PORT4, true);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

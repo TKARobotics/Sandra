@@ -22,6 +22,11 @@ competition Competition;
 
 // define your global instances of motors and other devices here
 
+int leftStickXaxis = Controller1.Axis4.value();
+int rawStrafeInput = leftStickXaxis;
+int rightStickYaxis = (Controller1.Axis2.value() + 126) / 62.5;
+int ArmSpeedPercent = 50;
+vex::vision Vision1(vex::PORT5);
 
 
 /*---------------------------------------------------------------------------*/
@@ -55,9 +60,70 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
+FrontLeftMotor.rotateFor(vex::directionType::rev, 659.4, vex::rotationUnits::deg);
+ 
+    Brain.Screen.clearLine();
+    Vision1.takeSnapshot(REDBALL);
+ 
+    if (Vision1.largestObject.exists) {
+    FrontRightMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    FrontLeftMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    BackRightMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    BackLeftMotor.rotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    
+    // bring in code
+
+    LeftBasketMotor.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+    RightBasketMotor.rotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+
+    // score out code
+
+    LeftBasketMotor.startRotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+    RightBasketMotor.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+
+    FrontRightMotor.rotateFor(vex::directionType::rev, 70.2, vex::rotationUnits::deg);
+ 
+    FrontRightMotor.startRotateFor(vex::directionType::fwd, 1689.95, vex::rotationUnits::deg);
+    FrontLeftMotor.startRotateFor(vex::directionType::fwd, 1689.95, vex::rotationUnits::deg);
+    BackRightMotor.startRotateFor(vex::directionType::fwd, 1689.95, vex::rotationUnits::deg);
+    BackLeftMotor.rotateFor(vex::directionType::fwd, 1689.95, vex::rotationUnits::deg);
+ 
+    //      insert bring in code
+ 
+    FrontRightMotor.rotateFor(vex::directionType::rev, 102.69, vex::rotationUnits::deg);
+ 
+    FrontRightMotor.startRotateFor(vex::directionType::fwd, 1158.66, vex::rotationUnits::deg);
+    FrontLeftMotor.startRotateFor(vex::directionType::fwd, 1158.66, vex::rotationUnits::deg);
+    BackRightMotor.startRotateFor(vex::directionType::fwd, 1158.66, vex::rotationUnits::deg);
+    BackLeftMotor.rotateFor(vex::directionType::fwd, 1158.66, vex::rotationUnits::deg);
+ 
+    LeftBasketMotor.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+    RightBasketMotor.rotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+
+    //      insert score code
+
+    LeftBasketMotor.startRotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+    RightBasketMotor.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+ 
+    FrontLeftMotor.rotateFor(vex::directionType::rev, 500, vex::rotationUnits::deg);
+ 
+    FrontRightMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    FrontLeftMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    BackRightMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    BackLeftMotor.startRotateFor(vex::directionType::fwd, 1490.24, vex::rotationUnits::deg);
+    
+
+
+    //      }
+ 
+    //  
+ 
+   //   else  {
+    //     VisionSensorPath.takeSnapshot(REDBALL);
+    //   }
+    //}
+
+  //while (Vision1.value() != Vision1.takeSnapshot(REDBALL);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -70,81 +136,67 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void usercontrol(void) {
-  // User control code here, inside the loop
-  while (1) {
+void usercontrol(void) { 
+
+  while (1) 
+  {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-      //mecanum draft one//
-      
-     /*FrontLeftMotor = Axis3 + Axis1 + Axis4;
-     BackLeftMotor = Axis3 + Axis1 - Axis4;
-     FrontRightMotor = Axis3 - Axis1 - Axis4;
-     BackRightMotor = Axis3 - Axis1 + Axis4;*/
-
-     //mecanum//
-     
-     
-      /* */
-       int leftStickXaxis = Controller1.Axis4.value();
-       int rawStrafeInput = leftStickXaxis;
-
-
-       int rightStickYaxis = (Controller1.Axis2.value() + 126) / 62.5;
-
-       // defining variables with Quincy
-     // strafe = left stick x-axis
-     // drive = left stick y-axis
-     // turn = right stick x-axis
-     /* */  
 
      FrontLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
      BackLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() + Controller1.Axis4.value())* rightStickYaxis, vex::velocityUnits::pct);
      FrontRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() + Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
      BackRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
      
-    }
+     if ( Controller1.ButtonR1.pressing() ) 
+     {
+        LeftBasketMotor.spin(vex::directionType::fwd, ArmSpeedPercent, vex::velocityUnits::pct);
+        RightBasketMotor.spin(vex::directionType::fwd, ArmSpeedPercent, vex::velocityUnits::pct);
+     }
+     else if ( Controller1.ButtonR2.pressing() )
+     {
+        LeftBasketMotor.spin(vex::directionType::rev, ArmSpeedPercent, vex::velocityUnits::pct);
+        RightBasketMotor.spin(vex::directionType::rev, ArmSpeedPercent, vex::velocityUnits::pct);
+     }
+     else 
+     {
+        LeftBasketMotor.stop( vex::brakeType::brake );
+        RightBasketMotor.stop( vex::brakeType::brake );
+     }
+      
+
+      }
+
+
+
+
+    
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
 
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
-  }
+    
 
 
 //
 // Main will set up the competition functions and callbacks.
 //
-int main() {
+int main() 
+{
   // Set up callbacks for autonomous and driver control periods.
-  Competition.autonomous(autonomous);
-  Competition.drivercontrol(usercontrol);
+  Competition.autonomous( autonomous );
+  Competition.drivercontrol( usercontrol );
 
   // Run the pre-autonomous function.
   pre_auton();
 
   // Prevent main from exiting with an infinite loop.
-  while (true) {
-    wait(100, msec);
+  while ( true ) 
+  {
+    wait( 100, msec );
   }
 }
-//code I found online relating to the wheels(commented out for now)
-/*int x1 = THRESHOLD(vexRT[Ch4], 15);
-    int y1 = THRESHOLD(vexRT[Ch3], 15);
-    int x2 = THRESHOLD(vexRT[Ch1], 15);
-    int y2 = THRESHOLD(vexRT[Ch2], 15);
-  int yComp = ((abs(y1) > abs(y2)) ? y1 : y2);
-  int turnComp = ((abs(x2) == 0) ? x1/2 : x1);
-  int strafeComp = ((abs(x1) == 0) ? x2/2 : x2);
-    output_Left_Front = LIMIT(127, -127, yComp + turnComp + strafeComp);
-    output_Left_Rear = LIMIT(127, -127, yComp + turnComp - strafeComp);
-    output_Right_Front = LIMIT(127, -127, yComp - turnComp - strafeComp);
-    output_Right_Rear = LIMIT(127, -127, yComp - turnComp + strafeComp);*/
-
-/*int chAddition = Ch3 + Ch1 + Ch4;
-chAddition = abs(chAddition) > 127 ? sgn(chAddition) * 127 : chAddition;
-**int motorValue = (int) (pow(chAddition, 2) / 127);**
-motor[FrontRightMotor] = motorValue > DEADZONE ? sgn(chAddition) * motorValue : 0;*/
+}
+}
