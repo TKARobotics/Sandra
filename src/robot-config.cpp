@@ -16,6 +16,8 @@ motor FrontLeftMotor = motor (PORT1, false);
 motor FrontRightMotor = motor (PORT2, true);
 motor LeftBasketMotor = motor (PORT3, false);
 motor RightBasketMotor = motor (PORT4, true);
+motor LeftInTakeMotor = motor (PORT5, false);
+motor RightInTakeMotor = motor (PORT6, true);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

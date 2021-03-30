@@ -14,14 +14,13 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
-
+#include "Vision1.h"
 using namespace vex;
 
 // A global instance of competition
 competition Competition;
 
 // define your global instances of motors and other devices here
-vex::vision Vision1(vex::PORT5);
 
 int leftStickXaxis = Controller1.Axis4.value();
 int rawStrafeInput = leftStickXaxis;
@@ -65,50 +64,55 @@ void driveForward(int amountForward)
     BackRightMotor.startRotateFor(vex::directionType::fwd, amountForward, vex::rotationUnits::deg);
     BackLeftMotor.rotateFor(vex::directionType::fwd, amountForward, vex::rotationUnits::deg);
 }
+void turnRobot(int turnRotations)
+{
+  FrontRightMotor.rotateFor(vex::directionType::rev, turnRotations, vex::rotationUnits::deg);
+}
+void basketUp(void)
+{
+  LeftBasketMotor.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+  RightBasketMotor.rotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+}
+void basketDown(void)
+{
+  LeftBasketMotor.startRotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+  RightBasketMotor.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+}
+void inTake(void)
+{
+  LeftInTakeMotor.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+  RightInTakeMotor.rotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
+}
+void outTake(void)
+{
+  LeftInTakeMotor.startRotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+  RightInTakeMotor.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
+}
 void autonomous(void) 
 {
-  FrontLeftMotor.rotateFor(vex::directionType::rev, 659.4, vex::rotationUnits::deg);
- 
-  Brain.Screen.clearLine();
-//  Vision1.takeSnapshot(REDBALL);
-int seesRedBall = Vision1.largestObject.exists;
+  turnRobot(650);
+  
+  int seesRedBall = Vision1.largestObject.exists;
+  
+  Vision1.takeSnapshot(REDBALLL);
 
   if ( seesRedBall )
   {
     driveForward(1490);
-    
-    // bring in code
-
-    LeftBasketMotor.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
-    RightBasketMotor.rotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
-
-    // score out code
-
-    LeftBasketMotor.startRotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
-    RightBasketMotor.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
-
-    FrontRightMotor.rotateFor(vex::directionType::rev, 70.2, vex::rotationUnits::deg);
-
+    inTake();
+    basketUp();
+    outTake();
+    basketDown();
+    turnRobot(70);
     driveForward(1690);
-
-    //      insert bring in code
-
-    FrontRightMotor.rotateFor(vex::directionType::rev, 102.69, vex::rotationUnits::deg);
-
+    inTake();
+    turnRobot(103);
     driveForward(1159);
-
-    LeftBasketMotor.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
-    RightBasketMotor.rotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
-
-    //      insert score code
-
-    LeftBasketMotor.startRotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
-    RightBasketMotor.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
-
-    FrontLeftMotor.rotateFor(vex::directionType::rev, 500, vex::rotationUnits::deg);
-
+    basketUp();
+    outTake();
+    basketDown();
+    turnRobot(500);
     driveForward(1490);
-    
   }
   else
   {
@@ -126,21 +130,16 @@ int seesRedBall = Vision1.largestObject.exists;
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-
-void usercontrol(void) 
-{ 
-  while (1) 
-  {
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
-
-     FrontLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
-     BackLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() + Controller1.Axis4.value())* rightStickYaxis, vex::velocityUnits::pct);
-     FrontRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() + Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
-     BackRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
-     
-     if ( Controller1.ButtonR1.pressing() ) 
+void driveCode(void)
+{
+  FrontLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
+  BackLeftMotor.spin(directionType::fwd, (Controller1.Axis3.value() - Controller1.Axis1.value() + Controller1.Axis4.value())* rightStickYaxis, vex::velocityUnits::pct);
+  FrontRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() + Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
+  BackRightMotor.spin(directionType::fwd, (Controller1.Axis3.value() + Controller1.Axis1.value() - Controller1.Axis4.value()) * rightStickYaxis, vex::velocityUnits::pct);
+}
+void basketControl(void)
+{
+  if ( Controller1.ButtonR1.pressing() ) 
      {
         LeftBasketMotor.spin(vex::directionType::fwd, ArmSpeedPercent, vex::velocityUnits::pct);
         RightBasketMotor.spin(vex::directionType::fwd, ArmSpeedPercent, vex::velocityUnits::pct);
@@ -154,9 +153,20 @@ void usercontrol(void)
      {
         LeftBasketMotor.stop( vex::brakeType::brake );
         RightBasketMotor.stop( vex::brakeType::brake );
+     }
+}
+void usercontrol(void) 
+{ 
+  while (1) 
+  {
+    // This is the main execution loop for the user control program.
+    // Each time through the loop your program should update motor + servo
+    // values based on feedback from the joysticks.
+     driveCode();
+     basketControl();
      }     
   }
-}
+
 
 
 
@@ -172,6 +182,7 @@ void usercontrol(void)
 //
 // Main will set up the competition functions and callbacks.
 //
+
 int main() 
 {
   // Set up callbacks for autonomous and driver control periods.
@@ -187,3 +198,4 @@ int main()
     wait( 100, msec );
   }
 }
+
