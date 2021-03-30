@@ -68,6 +68,12 @@ Discarded input sections
                 0x0000000000000000       0x40 build/src/main.o
  .ARM.exidx.text._Z9turnRoboti
                 0x0000000000000000        0x8 build/src/main.o
+ .text._Z19inAndOutTakeControlv
+                0x0000000000000000       0xf0 build/src/main.o
+ .ARM.exidx.text._Z19inAndOutTakeControlv
+                0x0000000000000000        0x8 build/src/main.o
+ .data.treadSpeedPercent
+                0x0000000000000000        0x4 build/src/main.o
  .llvm_addrsig  0x0000000000000000       0x15 build/src/main.o
  .text          0x0000000000000000        0x0 build/src/robot-config.o
  .data.RemoteControlCodeEnabled

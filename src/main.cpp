@@ -3,7 +3,7 @@
 /*    Module:       main.cpp                                                  */
 /*    Author:       VEX                                                       */
 /*    Created:      Thu Sep 26 2019                                           */
-/*    Description:  Competition Template ok                                     */
+/*    Description:  Competition Template ok                                   */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -26,7 +26,7 @@ int leftStickXaxis = Controller1.Axis4.value();
 int rawStrafeInput = leftStickXaxis;
 int rightStickYaxis = (Controller1.Axis2.value() + 126) / 62.5;
 int ArmSpeedPercent = 50;
-
+int treadSpeedPercent = 20;
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -155,6 +155,24 @@ void basketControl(void)
         RightBasketMotor.stop( vex::brakeType::brake );
      }
 }
+void inAndOutTakeControl(void)
+{
+  if ( Controller1.ButtonR2.pressing() ) 
+     {
+        LeftInTakeMotor.spin( vex::directionType::fwd, treadSpeedPercent, vex::velocityUnits::pct );
+        RightInTakeMotor.spin( vex::directionType::fwd, treadSpeedPercent, vex::velocityUnits::pct );
+     }
+     else if ( Controller1.ButtonR2.pressing() )
+     {
+        LeftInTakeMotor.spin( vex::directionType::rev, treadSpeedPercent, vex::velocityUnits::pct );
+        RightInTakeMotor.spin( vex::directionType::rev, treadSpeedPercent, vex::velocityUnits::pct );
+     }
+     else 
+     {
+        LeftInTakeMotor.stop( vex::brakeType::brake );
+        RightInTakeMotor.stop( vex::brakeType::brake );
+     }
+}
 void usercontrol(void) 
 { 
   while (1) 
@@ -164,8 +182,9 @@ void usercontrol(void)
     // values based on feedback from the joysticks.
      driveCode();
      basketControl();
-     }     
-  }
+     inAndOutTakeControl();
+  }     
+}
 
 
 
