@@ -157,12 +157,12 @@ void basketControl(void)
 }
 void inAndOutTakeControl(void)
 {
-  if ( Controller1.ButtonR2.pressing() ) 
+  if ( Controller1.ButtonL1.pressing() ) 
      {
         LeftInTakeMotor.spin( vex::directionType::fwd, treadSpeedPercent, vex::velocityUnits::pct );
         RightInTakeMotor.spin( vex::directionType::fwd, treadSpeedPercent, vex::velocityUnits::pct );
      }
-     else if ( Controller1.ButtonR2.pressing() )
+     else if ( Controller1.ButtonL2.pressing() )
      {
         LeftInTakeMotor.spin( vex::directionType::rev, treadSpeedPercent, vex::velocityUnits::pct );
         RightInTakeMotor.spin( vex::directionType::rev, treadSpeedPercent, vex::velocityUnits::pct );
